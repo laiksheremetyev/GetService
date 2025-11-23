@@ -16,11 +16,16 @@
     <nav class="navmenu">
       <div class="navmenu-desktop">
         <ul class="navmenu-list">
-          <li><a href="#chem-clean">Химчистка</a></li>
-          <li><a href="#shoes">Обувь</a></li>
-          <li><a href="#bags">Сумки</a></li>
-          <li><a href="#atelier">Ателье</a></li>
-          <li><a href="#delivery">Доставка</a></li>
+          <li class="dropdown">
+            <button>Услуги</button>
+            <ul class="dropdown-content">
+              <li><a href="#chem-clean">Химчистка</a></li>
+              <li><a href="#shoes">Обувь</a></li>
+              <li><a href="#bags">Сумки</a></li>
+              <li><a href="#atelier">Ателье</a></li>
+              <li><a href="#delivery">Доставка</a></li>
+            </ul>
+          </li>
           <li><a href="#contacts">Контакты</a></li>
           <li><a href="#about">О нас</a></li>
           <li><a href="#news">Новости</a></li>
@@ -51,16 +56,31 @@
       // Мобильное меню: открытие/закрытие
       const hamburger = document.querySelector('.hamburger');
       const mobileMenu = document.querySelector('.mobile-menu');
-      hamburger.addEventListener('click', () => {
+      hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
         mobileMenu.classList.toggle('open');
         hamburger.classList.toggle('active');
       });
-      // Выпадающий список услуг в мобильном меню
+      // Выпадающий список услуг в мобильном меню по нажатию
       const dropdownToggle = document.querySelector('.dropdown-toggle');
       const dropdownContentMobile = document.querySelector('.dropdown-content-mobile');
-      dropdownToggle.addEventListener('click', () => {
+      dropdownToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
         dropdownContentMobile.classList.toggle('open');
         dropdownToggle.classList.toggle('active');
+      });
+      // Скрытие мобильного меню при клике вне меню
+      document.addEventListener('click', (e) => {
+        if (mobileMenu.classList.contains('open')) {
+          const isMenu = mobileMenu.contains(e.target);
+          const isHamburger = hamburger.contains(e.target);
+          if (!isMenu && !isHamburger) {
+            mobileMenu.classList.remove('open');
+            hamburger.classList.remove('active');
+            dropdownContentMobile.classList.remove('open');
+            dropdownToggle.classList.remove('active');
+          }
+        }
       });
     </script>
   </header>
